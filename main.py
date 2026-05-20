@@ -191,13 +191,3 @@ try:
     logger.info("Frontend directory mounted at /frontend")
 except Exception as e:
     logger.warning(f"Could not mount frontend directory: {e}")
-
-
-if __name__ == "__main__":
-    uvicorn.run(
-        app,
-        host=config.API_HOST,
-        port=config.API_PORT,
-        debug=config.DEBUG,
-        reload=config.DEBUG,
-    )
