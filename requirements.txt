@@ -5,3 +5,4 @@ pydantic-settings
 reportlab
 python-multipart
 python-dotenv
+hypercorn
