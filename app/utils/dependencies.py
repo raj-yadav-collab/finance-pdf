@@ -1,4 +1,4 @@
-from config import config
+
 from app.repositories.client_repository import ClientRepository
 from app.repositories.account_repository import AccountRepository
 from app.repositories.report_repository import ReportRepository
@@ -12,17 +12,17 @@ from app.controllers.dashboard_controller import DashboardController
 
 def get_client_repository() -> ClientRepository:
     """Get client repository instance."""
-    return ClientRepository(config.DATABASE_PATH)
+    return ClientRepository("./clients.db")
 
 
 def get_account_repository() -> AccountRepository:
     """Get account repository instance."""
-    return AccountRepository(config.DATABASE_PATH)
+    return AccountRepository("./clients.db")
 
 
 def get_report_repository() -> ReportRepository:
     """Get report repository instance."""
-    return ReportRepository(config.DATABASE_PATH)
+    return ReportRepository("./clients.db")
 
 
 def get_client_service() -> ClientService:
