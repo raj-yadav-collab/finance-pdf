@@ -1,14 +1,13 @@
 import sqlite3
 import logging
+from contextlib import asynccontextmanager
 from datetime import datetime
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 
-from config import config
 from app.routes.client_route import router as client_router
 from app.routes.report_route import router as report_router
 from app.routes.dashboard_route import router as dashboard_router
@@ -19,17 +18,22 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 FRONTEND_DIR = Path(__file__).resolve().parent / "frontend"
 
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    """Manage application startup and shutdown."""
+    init_database()
+    yield
+    logger.info("Application shutting down")
+
+
 # Create FastAPI app
-app = FastAPI(
-    title=config.APP_NAME,
-    version=config.APP_VERSION,
-    debug=config.DEBUG,
-)
+app = FastAPI(lifespan=lifespan)
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=config.CORS_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,7 +45,7 @@ app.middleware("http")(error_handler_middleware)
 
 def init_database():
     """Initialize SQLite database with tables."""
-    conn = sqlite3.connect(config.DATABASE_PATH)
+    conn = sqlite3.connect("./clients.db")
     cursor = conn.cursor()
     
     # Create clients table
@@ -121,20 +125,6 @@ def init_database():
     
     conn.commit()
     conn.close()
-    logger.info(f"Database initialized at {config.DATABASE_PATH}")
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize database on startup."""
-    init_database()
-    logger.info(f"Application started: {config.APP_NAME} v{config.APP_VERSION}")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Cleanup on shutdown."""
-    logger.info("Application shutting down")
 
 
 # Register route routers
@@ -148,9 +138,7 @@ async def health_check():
     """Health check endpoint."""
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
-        "app": config.APP_NAME,
-        "version": config.APP_VERSION,
+        "timestamp": datetime.utcnow().isoformat()
     }
 
 
