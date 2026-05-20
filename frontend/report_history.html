@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report History - Windbrook Solutions</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Windbrook Solutions</h1>
+                <p class="tagline">Report History</p>
+            </div>
+            <a href="index.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="loadingIndicator" class="loading-indicator">
+                <p>Loading report history...</p>
+            </div>
+            
+            <div id="reportContent" style="display: none;">
+                <h2 id="clientTitle">Client Reports</h2>
+                
+                <div class="clients-table">
+                    <table id="reportsTable">
+                        <thead>
+                            <tr>
+                                <th>Report Date</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsList">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px; color: #999;">
+                    <p>No reports yet.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+    <script>
+        let currentClientId = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientId = getQueryParam('client_id');
+            if (clientId) {
+                currentClientId = clientId;
+                loadReportHistory(clientId);
+            } else {
+                showError('No client ID provided');
+            }
+        });
+        
+        async function loadReportHistory(clientId) {
+            try {
+                const { response, data } = await fetchJSON(`/clients/${clientId}/reports`);
+                
+                if (response.ok && data && data.success) {
+                    displayReportHistory(data.data);
+                } else {
+                    showError('Failed to load report history');
+                }
+            } catch (error) {
+                console.error('Error loading report history:', error);
+                showError('Error loading report history');
+            }
+        }
+        
+        function displayReportHistory(reports) {
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('reportContent').style.display = 'block';
+            
+            if (!reports || reports.length === 0) {
+                document.getElementById('reportsTable').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'block';
+                return;
+            }
+            
+            const tbody = document.getElementById('reportsList');
+            let html = '';
+            
+            reports.forEach(report => {
+                const statusBadge = report.status === 'final' 
+                    ? '<span style="background: #4CAF50; color: white; padding: 4px 8px; border-radius: 3px; font-size: 12px;">Final</span>'
+                    : '<span style="background: #FFC107; color: #333; padding: 4px 8px; border-radius: 3px; font-size: 12px;">Draft</span>';
+                
+                html += `
+                    <tr>
+                        <td><strong>${formatDate(report.report_date)}</strong></td>
+                        <td>${statusBadge}</td>
+                        <td><small style="color: #888;">${new Date(report.created_at).toLocaleDateString()}</small></td>
+                        <td>
+                            <a href="#" onclick="downloadSacs(${report.id}); return false;" class="link">SACS PDF</a>
+                            <a href="#" onclick="downloadTcc(${report.id}); return false;" class="link">TCC PDF</a>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        function downloadSacs(reportId) {
+            window.location.href = `/reports/${reportId}/pdf/sacs`;
+        }
+        
+        function downloadTcc(reportId) {
+            window.location.href = `/reports/${reportId}/pdf/tcc`;
+        }
+    </script>
+</body>
+</html>

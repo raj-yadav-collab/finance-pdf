@@ -1,0 +1,241 @@
+/* Form specific styles */
+
+.form-container {
+    background: white;
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 10px 28px rgba(26, 53, 87, 0.08);
+    max-width: 900px;
+    margin: 30px auto;
+    border: 1px solid #d9dee7;
+}
+
+.form-title {
+    color: #1a3557;
+    font-size: 28px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #c9a84c;
+    padding-bottom: 15px;
+}
+
+fieldset {
+    border: 1px solid #d9dee7;
+    border-radius: 8px;
+    padding: 22px;
+    margin: 0;
+    background: #fbfcfd;
+}
+
+fieldset + fieldset {
+    margin-top: 24px;
+}
+
+legend {
+    padding: 0 8px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #1a3557;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #c9a84c;
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-row.full {
+    grid-template-columns: 1fr;
+}
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.account-form {
+    max-width: 100%;
+    margin: 22px 0 0;
+    padding: 20px;
+    border: 1px solid #d9dee7;
+    border-left: 3px solid #c9a84c;
+    border-radius: 8px;
+    background: #fbfcfd;
+}
+
+.account-form-actions {
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.account-list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.card-title-row h2,
+.card-title-row h3 {
+    margin-bottom: 0;
+}
+
+.form-actions button {
+    padding: 12px 30px;
+    font-size: 15px;
+}
+
+/* Stepped form */
+.steps-container {
+    margin-bottom: 30px;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.step.active .step-circle {
+    background-color: #c9a84c;
+    color: white;
+}
+
+.step.completed .step-circle {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.step-label {
+    font-size: 13px;
+    color: #666;
+}
+
+.step.active .step-label {
+    color: #1a3557;
+    font-weight: 600;
+}
+
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: block;
+}
+
+input[readonly] {
+    color: #667085;
+    cursor: default;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    accent-color: #1a3557;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+        margin: 16px auto;
+    }
+
+    .form-title {
+        font-size: 24px;
+    }
+
+    fieldset {
+        padding: 18px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-actions {
+        justify-content: stretch;
+    }
+
+    .form-actions .btn,
+    .form-actions button {
+        width: 100%;
+    }
+
+    .account-list-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .account-form {
+        padding: 16px;
+    }
+
+    .card-title-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .card-title-row .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

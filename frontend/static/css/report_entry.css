@@ -1,0 +1,218 @@
+/* Report entry specific styles */
+
+.report-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.report-form,
+.report-preview {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.report-form h3,
+.report-preview h3 {
+    color: #1a3557;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #c9a84c;
+}
+
+.form-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-section-title {
+    font-weight: 600;
+    color: #1a3557;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+.account-row {
+    background: #f9f9f9;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #c9a84c;
+}
+
+.account-row-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.account-row-label {
+    font-weight: 600;
+    color: #1a3557;
+}
+
+.account-row-last4 {
+    color: #888;
+    font-size: 12px;
+}
+
+.account-row-inputs {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) minmax(120px, 1fr) auto;
+    gap: 10px;
+    align-items: end;
+}
+
+.account-row-inputs input {
+    padding: 6px;
+    font-size: 12px;
+}
+
+.use-last-button {
+    padding: 6px 12px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.use-last-button:hover {
+    background: #e0e0e0;
+}
+
+.account-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 32px;
+}
+
+.stale-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    color: #667085;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.stale-toggle input {
+    width: auto;
+    margin: 0;
+}
+
+/* Preview panel */
+.preview-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.preview-title {
+    font-weight: 600;
+    color: #1a3557;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.preview-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 13px;
+}
+
+.preview-label {
+    color: #666;
+}
+
+.preview-value {
+    font-weight: 600;
+    color: #1a3557;
+}
+
+.preview-value.positive {
+    color: var(--success-color);
+}
+
+.preview-value.negative {
+    color: var(--error-color);
+}
+
+.preview-note {
+    color: #777;
+    font-size: 11px;
+    font-style: italic;
+    margin-top: -1px;
+    text-align: right;
+}
+
+/* Incomplete fields */
+.field-incomplete {
+    background-color: #fff3cd;
+    border-color: var(--warning-color) !important;
+}
+
+.validation-message {
+    margin-top: 12px;
+    color: #856404;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.btn.is-saving {
+    opacity: 0.72;
+    cursor: wait;
+}
+
+/* PDF download section */
+.pdf-downloads {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #c9a84c;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.pdf-downloads .btn {
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .report-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .report-form,
+    .report-preview {
+        padding: 16px;
+    }
+
+    .account-row-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .account-actions {
+        justify-content: space-between;
+    }
+
+    .pdf-downloads {
+        grid-template-columns: 1fr;
+    }
+}

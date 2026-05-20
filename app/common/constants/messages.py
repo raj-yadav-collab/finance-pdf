@@ -1,0 +1,23 @@
+# User-facing messages
+MSG_CLIENT_NOT_FOUND = "Client not found"
+MSG_CLIENT_CREATED = "Client created successfully"
+MSG_CLIENT_UPDATED = "Client updated successfully"
+MSG_CLIENT_DELETED = "Client deleted successfully"
+MSG_ACCOUNT_NOT_FOUND = "Account not found"
+MSG_ACCOUNT_CREATED = "Account created successfully"
+MSG_ACCOUNT_UPDATED = "Account updated successfully"
+MSG_ACCOUNT_DELETED = "Account deleted successfully"
+MSG_REPORT_NOT_FOUND = "Report not found"
+MSG_REPORT_CREATED = "Report created successfully"
+MSG_REPORT_FINALIZED = "Report finalized successfully"
+MSG_BALANCES_SAVED = "Balances saved successfully"
+MSG_MISSING_REQUIRED_BALANCES = "Missing required account balances"
+MSG_DUPLICATE_REPORT = "A draft report already exists for this client this quarter"
+MSG_INVALID_DUPLICATE_REPORT = "Invalid report request: duplicate draft exists"
+MSG_PDF_GENERATION_ERROR = "Error generating PDF report"
+MSG_CALCULATION_ERROR = "Error calculating financial metrics"
+MSG_INVALID_REQUEST = "Invalid request data"
+MSG_INTERNAL_ERROR = "Internal server error"
+
+# Success messages
+MSG_SUCCESS = "Operation completed successfully"

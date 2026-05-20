@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Profile - Windbrook Solutions</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/forms.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Windbrook Solutions</h1>
+                <p class="tagline">Client Profile</p>
+            </div>
+            <a href="index.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="loadingIndicator" class="loading-indicator">
+                <p>Loading client details...</p>
+            </div>
+            
+            <div id="clientContent" style="display: none;">
+                <!-- Client Info Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-row">
+                            <h2 id="clientName">Client Name</h2>
+                            <button type="button" class="btn btn-primary" onclick="showProfileEditForm()">Edit Profile</button>
+                        </div>
+                    </div>
+                    
+                    <div id="clientInfoPanel" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <!-- Client 1 Info -->
+                        <div>
+                            <h4 style="color: #1a3557; margin-bottom: 15px;">Client 1</h4>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px;">
+                                <p><strong>Name:</strong> <span id="client1_name"></span></p>
+                                <p><strong>Date of Birth:</strong> <span id="client1_dob"></span></p>
+                                <p><strong>Age:</strong> <span id="client1_age"></span></p>
+                                <p><strong>SSN:</strong> ***-**-<span id="client1_ssn"></span></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Client 2 Info -->
+                        <div id="client2Container">
+                            <h4 style="color: #1a3557; margin-bottom: 15px;">Client 2</h4>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px;">
+                                <p><strong>Name:</strong> <span id="client2_name"></span></p>
+                                <p><strong>Date of Birth:</strong> <span id="client2_dob"></span></p>
+                                <p><strong>Age:</strong> <span id="client2_age"></span></p>
+                                <p><strong>SSN:</strong> ***-**-<span id="client2_ssn"></span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="profileEditForm" class="account-form" style="display: none;" onsubmit="submitProfileEditForm(event)">
+                        <fieldset>
+                            <legend style="font-weight: 600; color: #1a3557;">Client 1 Information</legend>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="edit_first_name_1">First Name *</label>
+                                    <input type="text" id="edit_first_name_1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit_last_name_1">Last Name *</label>
+                                    <input type="text" id="edit_last_name_1" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="edit_dob_1">Date of Birth *</label>
+                                    <input type="date" id="edit_dob_1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit_ssn_last4_1">SSN Last 4 *</label>
+                                    <input type="text" id="edit_ssn_last4_1" maxlength="4" inputmode="numeric" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend style="font-weight: 600; color: #1a3557;">
+                                <input type="checkbox" id="edit_is_married" onchange="handleProfileJointToggle()">
+                                Joint client
+                            </legend>
+
+                            <div id="edit_client_2_section" style="display: none;">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="edit_first_name_2">First Name</label>
+                                        <input type="text" id="edit_first_name_2">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_last_name_2">Last Name</label>
+                                        <input type="text" id="edit_last_name_2">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="edit_dob_2">Date of Birth</label>
+                                        <input type="date" id="edit_dob_2">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_ssn_last4_2">SSN Last 4</label>
+                                        <input type="text" id="edit_ssn_last4_2" maxlength="4" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend style="font-weight: 600; color: #1a3557;">Financial Information</legend>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="edit_monthly_salary">Monthly Income *</label>
+                                    <input type="number" id="edit_monthly_salary" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit_monthly_expense_budget">Monthly Budget *</label>
+                                    <input type="number" id="edit_monthly_expense_budget" step="0.01" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row full">
+                                <div class="form-group">
+                                    <label for="edit_insurance_deductibles_total">Insurance Deductibles</label>
+                                    <input type="number" id="edit_insurance_deductibles_total" step="0.01">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="form-actions account-form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="hideProfileEditForm()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="profileSaveButton">Save Profile</button>
+                        </div>
+                    </form>
+                    
+                    <!-- Financial Info -->
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                        <h4 style="color: #1a3557; margin-bottom: 15px;">Financial Information</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px;">
+                                <small style="color: #666;">Monthly Income</small>
+                                <p style="font-size: 18px; font-weight: 600; color: #1a3557;" id="monthly_salary">$0.00</p>
+                            </div>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px;">
+                                <small style="color: #666;">Monthly Budget</small>
+                                <p style="font-size: 18px; font-weight: 600; color: #1a3557;" id="monthly_budget">$0.00</p>
+                            </div>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px;">
+                                <small style="color: #666;">Insurance Deductibles</small>
+                                <p style="font-size: 18px; font-weight: 600; color: #1a3557;" id="insurance_ded">$0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accounts Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Accounts</h3>
+                    </div>
+                    
+                    <div id="accountsContainer">
+                        <!-- Accounts populated by JavaScript -->
+                    </div>
+
+                    <form id="accountForm" class="account-form" style="display: none;" onsubmit="submitAccountForm(event)">
+                        <input type="hidden" id="account_id">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="account_type">Account Type *</label>
+                                <select id="account_type" required onchange="handleAccountTypeChange()">
+                                    <option value="">Select account type</option>
+                                    <option value="retirement_1">Retirement - Client 1</option>
+                                    <option value="retirement_2">Retirement - Client 2</option>
+                                    <option value="non_retirement">Non-Retirement</option>
+                                    <option value="trust">Trust</option>
+                                    <option value="liability">Liability</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="account_label">Label *</label>
+                                <input type="text" id="account_label" placeholder="Roth IRA" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="account_last4">Account Last 4</label>
+                                <input type="text" id="account_last4" maxlength="4" inputmode="numeric" placeholder="1234">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="display_order">Display Order</label>
+                                <input type="number" id="display_order" value="0" step="1">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group account-extra-field" id="interestRateGroup" style="display: none;">
+                                <label for="interest_rate">Interest Rate</label>
+                                <input type="number" id="interest_rate" step="0.01" placeholder="6.5">
+                            </div>
+
+                            <div class="form-group account-extra-field" id="propertyAddressGroup" style="display: none;">
+                                <label for="property_address">Property Address</label>
+                                <input type="text" id="property_address" placeholder="123 Main Street">
+                            </div>
+                        </div>
+
+                        <div class="form-actions account-form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="hideAccountForm()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="accountSubmitButton">Save Account</button>
+                        </div>
+                    </form>
+                    
+                    <button type="button" class="btn btn-primary" onclick="showAddAccountForm()" style="margin-top: 15px;">+ Add Account</button>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <button type="button" class="btn btn-success" onclick="goToReportEntry()" style="margin-right: 10px;">Generate Report</button>
+                    <button type="button" class="btn btn-secondary" onclick="goToReportHistory()" style="margin-right: 10px;">View Report History</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/client_form.js"></script>
+    <script>
+        let currentClientId = null;
+        let currentClientDetails = null;
+        let currentClientAccounts = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientId = getQueryParam('id');
+            if (clientId) {
+                currentClientId = clientId;
+                loadClientDetail(clientId);
+            } else {
+                showError('No client ID provided');
+            }
+        });
+        
+        async function loadClientDetail(clientId) {
+            try {
+                const { response, data } = await fetchJSON(`/clients/${clientId}`);
+                
+                if (response.ok && data && data.success) {
+                    displayClientDetail(data.data);
+                } else {
+                    showError('Failed to load client');
+                }
+            } catch (error) {
+                console.error('Error loading client:', error);
+                showError('Error loading client details');
+            }
+        }
+        
+        function displayClientDetail(client) {
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('clientContent').style.display = 'block';
+            currentClientDetails = client;
+            currentClientAccounts = client.accounts || [];
+            
+            // Set client name
+            let displayName = `${client.first_name_1} ${client.last_name_1}`;
+            if (client.first_name_2) {
+                displayName = `${client.first_name_1} & ${client.first_name_2} ${client.last_name_1}`;
+            }
+            document.getElementById('clientName').textContent = displayName;
+            
+            // Client 1 info
+            document.getElementById('client1_name').textContent = `${client.first_name_1} ${client.last_name_1}`;
+            document.getElementById('client1_dob').textContent = formatDate(client.dob_1);
+            document.getElementById('client1_age').textContent = client.age_1;
+            document.getElementById('client1_ssn').textContent = client.ssn_last4_1;
+            
+            // Client 2 info
+            if (client.first_name_2) {
+                document.getElementById('client2Container').style.display = 'block';
+                document.getElementById('client2_name').textContent = `${client.first_name_2} ${client.last_name_2}`;
+                document.getElementById('client2_dob').textContent = formatDate(client.dob_2);
+                document.getElementById('client2_age').textContent = client.age_2;
+                document.getElementById('client2_ssn').textContent = client.ssn_last4_2;
+            } else {
+                document.getElementById('client2Container').style.display = 'none';
+            }
+            
+            // Financial info
+            document.getElementById('monthly_salary').textContent = formatCurrency(client.monthly_salary);
+            document.getElementById('monthly_budget').textContent = formatCurrency(client.monthly_expense_budget);
+            document.getElementById('insurance_ded').textContent = formatCurrency(client.insurance_deductibles_total);
+            
+            // Display accounts
+            displayAccounts(currentClientAccounts);
+        }
+
+        function showProfileEditForm() {
+            if (!currentClientDetails) {
+                showError('Client details are still loading');
+                return;
+            }
+
+            populateProfileEditForm(currentClientDetails);
+            document.getElementById('profileEditForm').style.display = 'block';
+            document.getElementById('edit_first_name_1').focus();
+        }
+
+        function hideProfileEditForm() {
+            document.getElementById('profileEditForm').style.display = 'none';
+        }
+
+        function populateProfileEditForm(client) {
+            setProfileFieldValue('edit_first_name_1', client.first_name_1);
+            setProfileFieldValue('edit_last_name_1', client.last_name_1);
+            setProfileFieldValue('edit_dob_1', client.dob_1);
+            setProfileFieldValue('edit_ssn_last4_1', client.ssn_last4_1);
+            setProfileFieldValue('edit_monthly_salary', client.monthly_salary);
+            setProfileFieldValue('edit_monthly_expense_budget', client.monthly_expense_budget);
+            setProfileFieldValue('edit_insurance_deductibles_total', client.insurance_deductibles_total);
+
+            const isJoint = Boolean(client.first_name_2 || client.last_name_2 || client.dob_2 || client.ssn_last4_2);
+            document.getElementById('edit_is_married').checked = isJoint;
+            setProfileFieldValue('edit_first_name_2', client.first_name_2 || '');
+            setProfileFieldValue('edit_last_name_2', client.last_name_2 || '');
+            setProfileFieldValue('edit_dob_2', client.dob_2 || '');
+            setProfileFieldValue('edit_ssn_last4_2', client.ssn_last4_2 || '');
+            handleProfileJointToggle();
+        }
+
+        function handleProfileJointToggle() {
+            const isJoint = document.getElementById('edit_is_married').checked;
+            const client2Section = document.getElementById('edit_client_2_section');
+            client2Section.style.display = isJoint ? 'block' : 'none';
+        }
+
+        function setProfileFieldValue(fieldId, value) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.value = value ?? '';
+            }
+        }
+
+        function getProfileFieldValue(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (!field) {
+                return null;
+            }
+
+            const value = field.value.trim();
+            return value === '' ? null : value;
+        }
+
+        function getProfileNumberValue(fieldId) {
+            const value = getProfileFieldValue(fieldId);
+            return value === null ? null : parseFloat(value);
+        }
+
+        function validateProfileEditForm() {
+            const requiredFields = [
+                ['edit_first_name_1', 'Client 1 first name'],
+                ['edit_last_name_1', 'Client 1 last name'],
+                ['edit_dob_1', 'Client 1 date of birth'],
+                ['edit_ssn_last4_1', 'Client 1 SSN last 4'],
+                ['edit_monthly_salary', 'Monthly income'],
+                ['edit_monthly_expense_budget', 'Monthly budget'],
+            ];
+
+            for (const [fieldId, label] of requiredFields) {
+                if (!getProfileFieldValue(fieldId)) {
+                    showError(`Please enter ${label}.`);
+                    document.getElementById(fieldId).focus();
+                    return false;
+                }
+            }
+
+            const ssn1 = getProfileFieldValue('edit_ssn_last4_1');
+            if (!/^\d{4}$/.test(ssn1)) {
+                showError('Client 1 SSN last 4 must be exactly 4 digits.');
+                document.getElementById('edit_ssn_last4_1').focus();
+                return false;
+            }
+
+            const salary = getProfileNumberValue('edit_monthly_salary');
+            const budget = getProfileNumberValue('edit_monthly_expense_budget');
+            const deductibles = getProfileNumberValue('edit_insurance_deductibles_total') || 0;
+            if (!(salary > 0) || !(budget > 0) || deductibles < 0) {
+                showError('Monthly income and budget must be greater than zero. Deductibles cannot be negative.');
+                return false;
+            }
+
+            if (document.getElementById('edit_is_married').checked) {
+                const spouseFields = [
+                    ['edit_first_name_2', 'Client 2 first name'],
+                    ['edit_last_name_2', 'Client 2 last name'],
+                    ['edit_dob_2', 'Client 2 date of birth'],
+                    ['edit_ssn_last4_2', 'Client 2 SSN last 4'],
+                ];
+
+                for (const [fieldId, label] of spouseFields) {
+                    if (!getProfileFieldValue(fieldId)) {
+                        showError(`Please enter ${label}.`);
+                        document.getElementById(fieldId).focus();
+                        return false;
+                    }
+                }
+
+                const ssn2 = getProfileFieldValue('edit_ssn_last4_2');
+                if (!/^\d{4}$/.test(ssn2)) {
+                    showError('Client 2 SSN last 4 must be exactly 4 digits.');
+                    document.getElementById('edit_ssn_last4_2').focus();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function buildProfileUpdatePayload() {
+            const isJoint = document.getElementById('edit_is_married').checked;
+            const payload = {
+                first_name_1: getProfileFieldValue('edit_first_name_1'),
+                last_name_1: getProfileFieldValue('edit_last_name_1'),
+                dob_1: getProfileFieldValue('edit_dob_1'),
+                ssn_last4_1: getProfileFieldValue('edit_ssn_last4_1'),
+                monthly_salary: getProfileNumberValue('edit_monthly_salary'),
+                monthly_expense_budget: getProfileNumberValue('edit_monthly_expense_budget'),
+                insurance_deductibles_total: getProfileNumberValue('edit_insurance_deductibles_total') || 0,
+                first_name_2: isJoint ? getProfileFieldValue('edit_first_name_2') : null,
+                last_name_2: isJoint ? getProfileFieldValue('edit_last_name_2') : null,
+                dob_2: isJoint ? getProfileFieldValue('edit_dob_2') : null,
+                ssn_last4_2: isJoint ? getProfileFieldValue('edit_ssn_last4_2') : null,
+            };
+
+            return payload;
+        }
+
+        async function submitProfileEditForm(event) {
+            event.preventDefault();
+
+            if (!validateProfileEditForm()) {
+                return;
+            }
+
+            const saveButton = document.getElementById('profileSaveButton');
+            saveButton.disabled = true;
+            saveButton.textContent = 'Saving...';
+
+            try {
+                const { response, data } = await fetchJSON(`/clients/${currentClientId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(buildProfileUpdatePayload())
+                });
+
+                if (response.ok && data && data.success) {
+                    showSuccess(data.message || 'Client profile updated successfully');
+                    hideProfileEditForm();
+                    displayClientDetail(data.data);
+                } else {
+                    showError(getApiErrorMessage(data, 'Failed to update client profile'));
+                }
+            } catch (error) {
+                console.error('Error updating client profile:', error);
+                showError('Error updating client profile');
+            } finally {
+                saveButton.disabled = false;
+                saveButton.textContent = 'Save Profile';
+            }
+        }
+        
+        function displayAccounts(accounts) {
+            const container = document.getElementById('accountsContainer');
+            
+            if (!accounts || accounts.length === 0) {
+                container.innerHTML = '<p style="color: #999;">No accounts yet.</p>';
+                return;
+            }
+            
+            // Group accounts by type
+            const grouped = {};
+            accounts.forEach(account => {
+                if (!grouped[account.account_type]) {
+                    grouped[account.account_type] = [];
+                }
+                grouped[account.account_type].push(account);
+            });
+            
+            let html = '';
+            const typeLabels = {
+                'retirement_1': 'Retirement - Client 1',
+                'retirement_2': 'Retirement - Client 2',
+                'non_retirement': 'Non-Retirement',
+                'trust': 'Trust',
+                'liability': 'Liability'
+            };
+            
+            Object.entries(grouped).forEach(([type, accts]) => {
+                html += `<h4 style="color: #1a3557; margin: 15px 0 10px 0;">${typeLabels[type] || type}</h4>`;
+                accts.forEach(account => {
+                    html += `
+                        <div style="background: #f9f9f9; padding: 12px; margin-bottom: 8px; border-radius: 4px; border-left: 3px solid #c9a84c;">
+                            <div class="account-list-row">
+                                <div>
+                                    <strong>${escapeHtml(account.label)}</strong>
+                                    ${account.account_last4 ? ` <small style="color: #888;">...${account.account_last4}</small>` : ''}
+                                    ${account.interest_rate !== null && account.interest_rate !== undefined ? ` <small style="color: #888;">${account.interest_rate}%</small>` : ''}
+                                    ${account.property_address ? `<div><small style="color: #888;">${escapeHtml(account.property_address)}</small></div>` : ''}
+                                </div>
+                                <div>
+                                    <a href="#" onclick="editAccount(${account.id}); return false;" class="link" style="margin-right: 10px;">Edit</a>
+                                    <a href="#" onclick="deleteAccount(${account.id}); return false;" class="link" style="color: #E53935;">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function showAddAccountForm() {
+            resetAccountForm();
+            document.getElementById('accountForm').style.display = 'block';
+            document.getElementById('accountSubmitButton').textContent = 'Save Account';
+            document.getElementById('account_type').focus();
+        }
+        
+        function editAccount(accountId) {
+            const account = currentClientAccounts.find(item => item.id === accountId);
+            if (!account) {
+                showError('Account not found');
+                return;
+            }
+
+            document.getElementById('account_id').value = account.id;
+            document.getElementById('account_type').value = account.account_type;
+            document.getElementById('account_label').value = account.label || '';
+            document.getElementById('account_last4').value = account.account_last4 || '';
+            document.getElementById('interest_rate').value = account.interest_rate ?? '';
+            document.getElementById('property_address').value = account.property_address || '';
+            document.getElementById('display_order').value = account.display_order ?? 0;
+
+            handleAccountTypeChange();
+            document.getElementById('accountForm').style.display = 'block';
+            document.getElementById('accountSubmitButton').textContent = 'Update Account';
+            document.getElementById('account_label').focus();
+        }
+        
+        async function deleteAccount(accountId) {
+            if (confirm('Are you sure you want to delete this account?')) {
+                try {
+                    const { response, data } = await fetchJSON(`/clients/${currentClientId}/accounts/${accountId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok && data && data.success) {
+                        showSuccess(data.message || 'Account deleted successfully');
+                        hideAccountForm();
+                        await loadClientDetail(currentClientId);
+                    } else {
+                        showError(getApiErrorMessage(data, 'Failed to delete account'));
+                    }
+                } catch (error) {
+                    console.error('Error deleting account:', error);
+                    showError('Error deleting account');
+                }
+            }
+        }
+
+        function hideAccountForm() {
+            document.getElementById('accountForm').style.display = 'none';
+            resetAccountForm();
+        }
+
+        function resetAccountForm() {
+            document.getElementById('accountForm').reset();
+            document.getElementById('account_id').value = '';
+            document.getElementById('display_order').value = '0';
+            handleAccountTypeChange();
+        }
+
+        function handleAccountTypeChange() {
+            const accountType = document.getElementById('account_type').value;
+            const interestRateGroup = document.getElementById('interestRateGroup');
+            const propertyAddressGroup = document.getElementById('propertyAddressGroup');
+
+            interestRateGroup.style.display = accountType === 'liability' ? 'block' : 'none';
+            propertyAddressGroup.style.display = accountType === 'trust' ? 'block' : 'none';
+
+            if (accountType !== 'liability') {
+                document.getElementById('interest_rate').value = '';
+            }
+
+            if (accountType !== 'trust') {
+                document.getElementById('property_address').value = '';
+            }
+        }
+
+        function getAccountFieldValue(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (!field) {
+                return null;
+            }
+
+            const value = field.value.trim();
+            return value === '' ? null : value;
+        }
+
+        function getAccountNumberValue(fieldId) {
+            const value = getAccountFieldValue(fieldId);
+            return value === null ? null : parseFloat(value);
+        }
+
+        function validateAccountForm() {
+            const accountType = getAccountFieldValue('account_type');
+            const label = getAccountFieldValue('account_label');
+            const last4 = getAccountFieldValue('account_last4');
+            const displayOrder = getAccountNumberValue('display_order');
+
+            if (!accountType) {
+                showError('Please select an account type.');
+                return false;
+            }
+
+            if (!label) {
+                showError('Please enter an account label.');
+                return false;
+            }
+
+            if (last4 && !/^\d{4}$/.test(last4)) {
+                showError('Account last 4 must be exactly 4 digits.');
+                return false;
+            }
+
+            if (displayOrder !== null && !Number.isInteger(displayOrder)) {
+                showError('Display order must be a whole number.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function buildAccountPayload() {
+            return {
+                account_type: getAccountFieldValue('account_type'),
+                label: getAccountFieldValue('account_label'),
+                account_last4: getAccountFieldValue('account_last4'),
+                interest_rate: getAccountNumberValue('interest_rate'),
+                property_address: getAccountFieldValue('property_address'),
+                display_order: getAccountNumberValue('display_order') ?? 0
+            };
+        }
+
+        async function submitAccountForm(event) {
+            event.preventDefault();
+
+            if (!validateAccountForm()) {
+                return;
+            }
+
+            const accountId = getAccountFieldValue('account_id');
+            const url = accountId
+                ? `/clients/${currentClientId}/accounts/${accountId}`
+                : `/clients/${currentClientId}/accounts`;
+            const method = accountId ? 'PUT' : 'POST';
+
+            try {
+                const { response, data } = await fetchJSON(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(buildAccountPayload())
+                });
+
+                if (response.ok && data && data.success) {
+                    showSuccess(data.message || 'Account saved successfully');
+                    hideAccountForm();
+                    await loadClientDetail(currentClientId);
+                } else {
+                    showError(getApiErrorMessage(data, 'Failed to save account'));
+                }
+            } catch (error) {
+                console.error('Error saving account:', error);
+                showError('Error saving account');
+            }
+        }
+        
+        async function goToReportEntry() {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const { response, data } = await fetchJSON('/reports/initiate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        client_id: parseInt(currentClientId, 10),
+                        report_date: today
+                    })
+                });
+
+                if (response.ok && data && data.success) {
+                    window.location.href = `/report_entry.html?id=${data.data.report_id}`;
+                } else {
+                    showError(getApiErrorMessage(data, 'Failed to initiate report'));
+                }
+            } catch (error) {
+                console.error('Error initiating report:', error);
+                showError('Error initiating report');
+            }
+        }
+        
+        function goToReportHistory() {
+            window.location.href = `/report_history.html?client_id=${currentClientId}`;
+        }
+    </script>
+</body>
+</html>

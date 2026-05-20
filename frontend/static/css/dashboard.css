@@ -1,0 +1,35 @@
+/* Dashboard specific styles */
+
+.dashboard-section h2 {
+    margin-bottom: 25px;
+}
+
+.clients-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.clients-table table {
+    margin: 0;
+    box-shadow: none;
+}
+
+.clients-table th {
+    background-color: #1a3557;
+    color: white;
+    font-weight: 600;
+}
+
+.clients-table td {
+    padding: 15px;
+}
+
+.clients-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.clients-table strong {
+    color: #1a3557;
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Client - Windbrook Solutions</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/forms.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Windbrook Solutions</h1>
+                <p class="tagline">Add New Client</p>
+            </div>
+            <a href="index.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-container">
+                <h2 class="form-title">Create New Client Profile</h2>
+                
+                <form id="clientForm">
+                    <!-- Basic Information -->
+                    <fieldset>
+                        <legend style="font-weight: 600; color: #1a3557; margin-bottom: 15px;">Client 1 Information</legend>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name_1">First Name *</label>
+                                <input type="text" id="first_name_1" name="first_name_1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name_1">Last Name *</label>
+                                <input type="text" id="last_name_1" name="last_name_1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dob_1">Date of Birth *</label>
+                                <input type="date" id="dob_1" name="dob_1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age_1">Age</label>
+                                <input type="text" id="age_1" readonly style="background: #f5f5f5;">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ssn_last4_1">SSN Last 4 Digits *</label>
+                            <input type="text" id="ssn_last4_1" name="ssn_last4_1" maxlength="4" placeholder="0000" required>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- Client 2 (Optional) -->
+                    <fieldset style="margin-top: 25px;">
+                        <legend style="font-weight: 600; color: #1a3557; margin-bottom: 15px;">
+                            <input type="checkbox" id="is_married" name="is_married">
+                            Is this a joint account?
+                        </legend>
+                        
+                        <div id="client_2_section" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first_name_2">First Name</label>
+                                    <input type="text" id="first_name_2" name="first_name_2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name_2">Last Name</label>
+                                    <input type="text" id="last_name_2" name="last_name_2">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dob_2">Date of Birth</label>
+                                    <input type="date" id="dob_2" name="dob_2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age_2">Age</label>
+                                    <input type="text" id="age_2" readonly style="background: #f5f5f5;">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ssn_last4_2">SSN Last 4 Digits</label>
+                                <input type="text" id="ssn_last4_2" name="ssn_last4_2" maxlength="4" placeholder="0000">
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- Financial Information -->
+                    <fieldset style="margin-top: 25px;">
+                        <legend style="font-weight: 600; color: #1a3557; margin-bottom: 15px;">Financial Information</legend>
+                        
+                        <div class="form-group">
+                            <label for="monthly_salary">Monthly After-Tax Income *</label>
+                            <input type="number" id="monthly_salary" name="monthly_salary" step="0.01" placeholder="0.00" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="monthly_expense_budget">Monthly Expense Budget *</label>
+                            <input type="number" id="monthly_expense_budget" name="monthly_expense_budget" step="0.01" placeholder="0.00" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="insurance_deductibles_total">Total Insurance Deductibles</label>
+                            <input type="number" id="insurance_deductibles_total" name="insurance_deductibles_total" step="0.01" placeholder="0.00">
+                        </div>
+                    </fieldset>
+                    
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" onclick="window.location.href='index.html'" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Client</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/client_form.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeClientForm();
+            
+            document.getElementById('clientForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitClientForm(false);
+            });
+        });
+    </script>
+</body>
+</html>

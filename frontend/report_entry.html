@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry - Windbrook Solutions</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/report_entry.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Windbrook Solutions</h1>
+                <p class="tagline">Quarterly Data Entry</p>
+            </div>
+            <a href="index.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="loadingIndicator" class="loading-indicator">
+                <p>Loading report...</p>
+            </div>
+            
+            <div id="reportContent" style="display: none;" class="report-container">
+                <!-- Left Panel: Data Entry Form -->
+                <div class="report-form">
+                    <h3>Enter Quarterly Balances</h3>
+                    
+                    <form id="reportForm">
+                        <!-- SACS Fields -->
+                        <div class="form-section">
+                            <div class="form-section-title">SACS (Cashflow) Fields</div>
+
+                            <div class="form-group">
+                                <label for="report_date">Report Date</label>
+                                <input type="date" id="report_date" readonly style="background: #f5f5f5;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="monthly_salary">Monthly After-Tax Income</label>
+                                <input type="number" id="monthly_salary" step="0.01" readonly style="background: #f5f5f5;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="monthly_expense_budget">Monthly Expense Budget</label>
+                                <input type="number" id="monthly_expense_budget" step="0.01" readonly style="background: #f5f5f5;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="insurance_deductibles_total">Insurance Deductibles</label>
+                                <input type="number" id="insurance_deductibles_total" step="0.01" readonly style="background: #f5f5f5;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="private_reserve_balance">Private Reserve Balance *</label>
+                                <input type="number" id="private_reserve_balance" step="0.01" placeholder="Enter balance" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="schwab_investment_balance">Schwab Investment Balance</label>
+                                <input type="number" id="schwab_investment_balance" step="0.01" placeholder="Enter balance">
+                            </div>
+                        </div>
+                        
+                        <!-- TCC Fields -->
+                        <div class="form-section">
+                            <div class="form-section-title">TCC (Net Worth) Account Balances</div>
+                            <div id="account_balances_container">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <button type="button" onclick="window.location.href='index.html'" class="btn btn-secondary">Cancel</button>
+                            <button type="button" id="save_and_generate_button" onclick="saveBalancesAndGenerate()" class="btn btn-success">Save & Generate PDFs</button>
+                        </div>
+                        <p id="report_validation_message" class="validation-message" style="display: none;"></p>
+
+                        <div id="pdf_downloads" class="pdf-downloads" style="display: none;">
+                            <a id="view_sacs_button" class="btn btn-primary" target="_blank" rel="noopener">View SACS PDF</a>
+                            <a id="download_sacs_button" class="btn btn-secondary">Download SACS PDF</a>
+                            <a id="view_tcc_button" class="btn btn-primary" target="_blank" rel="noopener">View TCC PDF</a>
+                            <a id="download_tcc_button" class="btn btn-secondary">Download TCC PDF</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Right Panel: Live Preview -->
+                <div class="report-preview">
+                    <h3>Live Calculation Preview</h3>
+                    <div id="calculation_preview">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/calculations.js"></script>
+    <script src="/static/js/report_entry.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeReportEntry();
+        });
+    </script>
+</body>
+</html>
